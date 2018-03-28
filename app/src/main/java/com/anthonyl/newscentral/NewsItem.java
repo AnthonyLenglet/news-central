@@ -25,7 +25,10 @@ public class NewsItem {
     }
 
     public String getBodyPreview() {
-        return body.substring(100)+"...";
+        if(body.length() > 100)
+            return body.substring(100)+"...";
+        else
+            return body;
     }
 
     public void setBody(String body) {
