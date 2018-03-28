@@ -12,6 +12,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -39,11 +40,11 @@ public class NewsFeed extends AppCompatActivity {
     void getNews() {
         RequestQueue queue = Volley.newRequestQueue(this);
 
-        String url ="http://jsonplaceholder.typicode.com/posts?userId=1";
-        JsonArrayRequest newsReq = new JsonArrayRequest(Request.Method.GET, url, null,
-                new Response.Listener<JSONArray>() {
+        String url ="https://newsapi.org/v2/top-headlines?country=fr&apiKey=fa75c35a4b9b485e816170a0bd08d85d";
+        JsonObjectRequest newsReq = new JsonObjectRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(JSONArray response) {
+                    public void onResponse(JSONObject response) {
                         parseNewsItems(response);
                     }
                 },
@@ -57,8 +58,25 @@ public class NewsFeed extends AppCompatActivity {
         queue.add(newsReq);
     }
 
-    void parseNewsItems(JSONArray jsonArr) {
-        for(int i=0;i<jsonArr.length();i++) {
+    void parseNewsItems(JSONObject jsonObj) {
+        JSONArray articlesList = null;
+        try {
+            articlesList = jsonObj.getJSONArray("articles");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        for(int i=0;i<articlesList.length();i++) {
+            try {
+                JSONObject article = articlesList.getJSONObject(i);
+                String title = article.getString("title");
+                String body = article.getString("description");
+                String image = article.getString("urlToImage");
+                newsItems.add(new NewsItem(title, body, image));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        /*for(int i=0;i<jsonArr.length();i++) {
             JSONObject newsObj = null;
             try {
                 newsObj = jsonArr.getJSONObject(i);
@@ -70,7 +88,7 @@ public class NewsFeed extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-        }
+        }*/
         createFeed();
     }
 
