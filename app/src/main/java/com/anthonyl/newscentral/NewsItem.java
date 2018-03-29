@@ -1,6 +1,10 @@
 package com.anthonyl.newscentral;
 
+import android.content.Context;
+
 public class NewsItem {
+
+    private Context context;
 
     private String url;
     private String title;
@@ -8,12 +12,17 @@ public class NewsItem {
     private String body;
     private String image;
 
-    public NewsItem(String url, String title, String article_info, String body, String image) {
+    public NewsItem(Context context, String url, String title, String article_info, String body, String image) {
+        this.context = context;
         this.url = url;
         this.title = title;
         this.article_info = article_info;
         this.body = body;
         this.image = image;
+    }
+
+    public Context getContext() {
+        return context;
     }
 
     public String getUrl() {

@@ -1,5 +1,6 @@
 package com.anthonyl.newscentral;
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -36,10 +37,10 @@ public class NewsFeed extends AppCompatActivity {
 
         NewsFeed = findViewById(R.id.NewsFeed);
 
-        getNews();
+        getNews(this);
     }
 
-    void getNews() {
+    void getNews(Context context) {
         RequestQueue queue = Volley.newRequestQueue(this);
 
         String url ="https://newsapi.org/v2/top-headlines?country=fr&apiKey=fa75c35a4b9b485e816170a0bd08d85d";
@@ -47,7 +48,7 @@ public class NewsFeed extends AppCompatActivity {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        parseNewsItems(response);
+                        parseNewsItems(context, response);
                     }
                 },
                 new Response.ErrorListener() {
@@ -60,7 +61,7 @@ public class NewsFeed extends AppCompatActivity {
         queue.add(newsReq);
     }
 
-    void parseNewsItems(JSONObject jsonObj) {
+    void parseNewsItems(Context context, JSONObject jsonObj) {
         JSONArray articlesList = null;
         try {
             articlesList = jsonObj.getJSONArray("articles");
@@ -80,7 +81,7 @@ public class NewsFeed extends AppCompatActivity {
                 String body = (article.getString("description") != null) ? article.getString("description") : "";
                 String image = (article.getString("urlToImage") != null) ? article.getString("urlToImage") : "";
 
-                newsItems.add(new NewsItem(url, title, article_info, body, image));
+                newsItems.add(new NewsItem(context, url, title, article_info, body, image));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
