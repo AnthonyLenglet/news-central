@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -69,10 +71,16 @@ public class NewsFeed extends AppCompatActivity {
             try {
                 JSONObject article = articlesList.getJSONObject(i);
                 Log.i("ARTICLE", article.toString());
+
+                String publisher = article.getJSONObject("source").getString("name");
+
+                String url = article.getString("url");
                 String title = article.getString("title");
-                String body = (article.getString("description")!=null)? article.getString("description") : "";
-                String image = (article.getString("urlToImage")!=null)? article.getString("urlToImage") : "";
-                newsItems.add(new NewsItem(title, body, image));
+                String article_info = publisher+" - "+article.getString("publishedAt");
+                String body = (article.getString("description") != null) ? article.getString("description") : "";
+                String image = (article.getString("urlToImage") != null) ? article.getString("urlToImage") : "";
+
+                newsItems.add(new NewsItem(url, title, article_info, body, image));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
