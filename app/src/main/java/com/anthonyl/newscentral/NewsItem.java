@@ -25,8 +25,8 @@ public class NewsItem {
     }
 
     public String getBodyPreview() {
-        if(body.length() > 100)
-            return body.substring(100)+"...";
+        if(body.length() > 20)
+            return body.substring(0, 100)+"...";
         else
             return body;
     }

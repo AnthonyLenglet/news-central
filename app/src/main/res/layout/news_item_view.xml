@@ -10,36 +10,43 @@
     app:cardCornerRadius="2dp"
     app:cardElevation="2dp">
 
-        <LinearLayout
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:hapticFeedbackEnabled="false"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/ic_launcher" />
+
+        <TextView
+            android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:background="?android:selectableItemBackground"
+            android:fontFamily="sans-serif"
+            android:paddingBottom="5dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="15dp"
+            android:text="Title"
+            android:textColor="#333"
+            android:textSize="18sp" />
 
-            <ImageView
-                android:id="@+id/image"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:scaleType="centerCrop"
-                android:src="@mipmap/ic_launcher" />
+        <TextView
+            android:id="@+id/bodyPreview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:selectableItemBackground"
+            android:paddingBottom="15dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="5dp"
+            android:text="Body" />
 
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?android:selectableItemBackground"
-                android:fontFamily="sans-serif"
-                android:padding="15dp"
-                android:textColor="#333"
-                android:textSize="18sp"
-                android:text="Title" />
-
-            <TextView
-                android:id="@+id/bodyPreview"
-                android:layout_width="match_parent"
-                android:layout_height="71dp"
-                android:paddingLeft="20dp"
-                android:paddingTop="10dp"
-                android:text="Body" />
-
-        </LinearLayout>
+    </LinearLayout>
 </android.support.v7.widget.CardView>
