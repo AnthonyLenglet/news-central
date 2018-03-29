@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -68,27 +70,21 @@ public class NewsFeed extends AppCompatActivity {
         for(int i=0;i<articlesList.length();i++) {
             try {
                 JSONObject article = articlesList.getJSONObject(i);
+                Log.i("ARTICLE", article.toString());
+
+                String publisher = article.getJSONObject("source").getString("name");
+
+                String url = article.getString("url");
                 String title = article.getString("title");
-                String body = article.getString("description");
-                String image = article.getString("urlToImage");
-                newsItems.add(new NewsItem(title, body, image));
+                String article_info = publisher+" - "+article.getString("publishedAt");
+                String body = (article.getString("description") != null) ? article.getString("description") : "";
+                String image = (article.getString("urlToImage") != null) ? article.getString("urlToImage") : "";
+
+                newsItems.add(new NewsItem(url, title, article_info, body, image));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
-        /*for(int i=0;i<jsonArr.length();i++) {
-            JSONObject newsObj = null;
-            try {
-                newsObj = jsonArr.getJSONObject(i);
-                String title = newsObj.getString("title");
-                String body = newsObj.getString("body");
-                String image = "https://imagejournal.org/wp-content/uploads/bb-plugin/cache/23466317216_b99485ba14_o-panorama.jpg";//newsObj.getString("image");
-
-                newsItems.add(new NewsItem(title, body, image));
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }*/
         createFeed();
     }
 
